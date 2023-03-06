@@ -37,7 +37,7 @@ function getWeatherForecast() {
                     // This sets a date using current time measurements 
                     const date = new Date(forecast.dt * 1000);
                     // This converts the temperature from Kelvin to Fahrenheit
-                    const temp = Math.round(forecast.main.temp - 459.67); 
+                    const temp = Math.round((forecast.main.temp - 273.15) * 9/5 + 32);
                     // This sets a new variable that will give a description of the weather forecast in the html
                     const description = forecast.weather[0].description;
                     // This sets a new variable using a url for various weather icons that will be displayed to the html
@@ -57,7 +57,7 @@ function getWeatherForecast() {
       
                     // This creates a temperature variable that will be appended to the forecast being displayed on the html
                     const tempDiv = document.createElement('div');
-                    tempDiv.textContent = `${temp}°C`;
+                    tempDiv.textContent = `${temp}°F`;
                     forecastItem.appendChild(tempDiv);
       
                     // This attaches a description of the forecast to the items in the html
