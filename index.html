@@ -15,10 +15,18 @@
     <title>Weather Dashboard</title>
 </head>
     <body>
+        <!-- This is the header information for the website. -->
         <header>
             <h1>Weather Dashboard</h1>
         </header>
-    
+        <!-- This is the form with the corresponding inputs needed to get the 5 day weather forecast. -->
+        <form>
+            <label for="city">Enter city:</label>
+            <input type="text" id="city" name="city">
+            <button type="button" onclick="getWeatherForecast()">Get Forecast</button>
+        </form>
+        <!-- This is the div element on the html that will then display the city's weather forecast. -->
+          <div id="forecast"></div>
 
         <!-- These are the script files for jquery and also the script.js file -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
