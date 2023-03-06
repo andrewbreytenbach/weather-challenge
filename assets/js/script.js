@@ -21,4 +21,12 @@ function getWeatherForecast() {
             // This returns the forecast url of the specified city with its latitude and longitudinal coordinates
             return fetch(forecastUrl);
             })
+
+            // This is (agani) basic syntax for a fetch function 
+            .then(response => response.json())
+            .then(data => {
+                // This declares a variable that will then be used to display the forecast to the html
+                const forecastDiv = document.getElementById('forecast');
+                // This clears any existing content in the html
+                forecastDiv.innerHTML = ''; 
 }
