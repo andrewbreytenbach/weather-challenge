@@ -22,11 +22,24 @@ function getWeatherForecast() {
             return fetch(forecastUrl);
             })
 
-            // This is (agani) basic syntax for a fetch function 
+            // This is (again) basic syntax for a fetch function 
             .then(response => response.json())
             .then(data => {
                 // This declares a variable that will then be used to display the forecast to the html
                 const forecastDiv = document.getElementById('forecast');
                 // This clears any existing content in the html
                 forecastDiv.innerHTML = ''; 
+                
+                // This uses a for loop to go through all of the times in the aforementioned array
+                for (let i = 0; i < data.list.length; i++) {
+                    // This uses the data list ability to store new variables for the forecast
+                    const forecast = data.list[i];
+                    // This sets a date using current time measurements 
+                    const date = new Date(forecast.dt * 1000);
+                    // This converts the temperature from Kelvin to Fahrenheit
+                    const temp = Math.round(forecast.main.temp - 459.67); 
+                    // This sets a new variable that will give a description of the weather forecast in the html
+                    const description = forecast.weather[0].description;
+                    // This sets a new variable using a url for various weather icons that will be displayed to the html
+                    const iconUrl = `https://openweathermap.org/img/w/${forecast.weather[0].icon}.png`;
 }
