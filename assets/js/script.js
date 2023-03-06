@@ -42,4 +42,34 @@ function getWeatherForecast() {
                     const description = forecast.weather[0].description;
                     // This sets a new variable using a url for various weather icons that will be displayed to the html
                     const iconUrl = `https://openweathermap.org/img/w/${forecast.weather[0].icon}.png`;
-}
+                    const forecastItem = document.createElement('div');
+                    forecastItem.classList.add('forecast-item');
+                    
+                    // This creates a date that will then be appended to the weather forecast item being displayed on the html
+                    const dateDiv = document.createElement('div');
+                    dateDiv.textContent = date.toLocaleDateString();
+                    forecastItem.appendChild(dateDiv);
+                    
+                    // This gives a weather icon to the forecast being displayed in the html
+                    const iconImg = document.createElement('img');
+                    iconImg.src = iconUrl;
+                    forecastItem.appendChild(iconImg);
+      
+                    // This creates a temperature variable that will be appended to the forecast being displayed on the html
+                    const tempDiv = document.createElement('div');
+                    tempDiv.textContent = `${temp}°C`;
+                    forecastItem.appendChild(tempDiv);
+      
+                    // This attaches a description of the forecast to the items in the html
+                    const descriptionDiv = document.createElement('div');
+                    descriptionDiv.textContent = description;
+                    forecastItem.appendChild(descriptionDiv);
+      
+                    // This appends all of the previously listed forecast items to the div element in the html
+                    forecastDiv.appendChild(forecastItem);
+                  }
+                })
+                // This logs error to the console log if any of the previous fetch functions do not work.
+                .catch(error => console.log(error));
+
+                }
