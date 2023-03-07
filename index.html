@@ -26,27 +26,28 @@
         </header>
       
         <!-- Main section with current weather and search history columns -->
-        <main class="row">
-          <!-- Current weather column with city name, date, weather icon, and temperature -->
-          <div class="col-lg-6" id="current-weather">
-            <div>
-              <h2 id="city-name"></h2>
-              <p id="current-date"></p>
+          <main class="row">
+            <!-- Current weather column with city name, date, weather icon, and temperature -->
+            <div class="col-lg-6" id="current-weather">
+              <div>
+                <h2 id="city-name"></h2>
+                <p id="current-date"></p>
+              </div>
+              <div>
+                <img id="weather-icon" />
+                <p class="temp" id="current-temp"></p>
+              </div>
             </div>
-            <div>
-              <img id="weather-icon" />
-              <p class="temp" id="current-temp"></p>
+
+            <!-- Search history column -->
+            <div class="col-lg-6" id="search-history">
+              <h3>Search History</h3>
+              <ul id="search-history-list"></ul>
             </div>
-          </div>
-      
-          <!-- Search history column -->
-          <div class="col-lg-6" id="search-history">
-            <h3>Search History</h3>
-          </div>
-      
-          <!-- Full-width forecast section -->
-          <div class="col-lg-12" id="forecast"></div>
-        </main>
+
+            <!-- Full-width forecast section -->
+            <div class="col-lg-12" id="forecast"></div>
+          </main>
       </div>
         <!-- These are the script files for jquery and also the script.js file -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>

@@ -99,16 +99,18 @@ async function renderForecast() {
 
 // Render search history
 function renderSearchHistory() {
-  searchHistory.innerHTML = '';
+  const searchHistoryList = document.querySelector('#search-history-list');
+  searchHistoryList.innerHTML = '';
   history
       // Get the last 5 unique items in the history array
       .filter((item, index, self) => self.lastIndexOf(item) === index)
       .slice(-5)
       .forEach(item => {
-          searchHistory.innerHTML += `<li class="search-history-item">${item}</li>`;
+          searchHistoryList.innerHTML += `<li class="search-history-item">${item}</li>`;
       });
-  setActiveHistoryItem(searchHistory.firstChild);
+  setActiveHistoryItem(searchHistoryList.firstChild);
 }
+
 
 
 // Set active class on search history item
