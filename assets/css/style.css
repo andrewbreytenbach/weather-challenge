@@ -1,26 +1,81 @@
-/*  */
-.forecast-item {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        margin: 10px;
-        padding: 10px;
-        border: 1px solid black;
-        border-radius: 5px;
-      }
-
-/*  */
+/* */
 header {
   background-image: linear-gradient(to right, rgb(80, 9, 234) , rgb(4, 102, 239));
   height: 100px;
-  padding-bottom: 25px;
+  padding: 25px 0;
   margin-bottom: 25px;
   color: white;
   text-align: center;
-}
+  }
+  
+  /* */
+  .searchbar {
+  display: flex;
+  align-items: center;
+  margin-bottom: 25px;
+  }
+  
+  #search-button {
+  margin-left: 10px;
+  }
+  
+  #current-weather {
+  margin-bottom: 25px;
+  }
+  
+  #weather-icon {
+  max-width: 100%;
+  }
+  
+  #current-temp {
+  font-size: 48px;
+  font-weight: bold;
+  margin: 0;
+  }
+  
+  #current-description {
+  font-size: 24px;
+  margin: 0;
+  }
+  
+  .forecast-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 10px;
+  padding: 10px;
+  border: 1px solid black;
+  border-radius: 5px;
+  }
+  
+  .list-group-horizontal {
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  }
+  
+  .list-group-item {
+  margin-right: 10px;
+  }
+  
+  @media (max-width: 768px) {
+  .forecast-item {
+  margin: 10px 0;
+  }
+  
+  .list-group-horizontal {
+  overflow-x: scroll;
+  scroll-snap-type: x mandatory;
+  }
+  
+  .list-group-item {
+  flex: 0 0 auto;
+  width: calc(100% / 3);
+  margin-right: 0;
+  scroll-snap-align: center;
+  }
+  }
 
-/*  */
-.searchbar {
-  padding-right: 25px;
-  margin-right: 25px;
-}
+  #forecast .list-group-item {
+    display: block;
+  }

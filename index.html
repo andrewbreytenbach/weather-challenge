@@ -18,25 +18,30 @@
         <!-- This is the header information for the website. -->
         <header>
             <h1>Weather Dashboard</h1>
-        </header>
-        <div class="container">
-            <form class="searchbar">
-              <label for="city">Enter city:</label>
-              <input type="text" id="city" name="city">
-              <button type="button" id="search-button">Get Forecast</button>
-            </form>
-        
-            <div class="row">
-              <div class="col-md-4 col-sm-12">
-                <h3>Search History</h3>
-                <div id="search-history"></div>
-              </div>
-              <div class="col-12">
-                <div class="list-group list-group-horizontal" id="forecast"></div>
+          </header>
+         
+          <div class="searchbar">
+            <label for="city">Enter city:</label>
+            <input type="text" id="city" name="city">
+            <button type="button" onclick="getWeatherForecast()" id="search-button">Get Forecast</button>
+          </div>
+         
+          <div class="row">
+            <div class="col-lg-6">
+              <div class="card mb-3" id="current-weather">
+                <!-- current weather content -->
               </div>
             </div>
+            <div class="col-lg-6">
+              <h3>5-Day Forecast</h3>
+              <div class="list-group" id="forecast"></div>
+            </div>
           </div>
-        
+          
+          
+          
+          
+              
 
         <!-- These are the script files for jquery and also the script.js file -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
