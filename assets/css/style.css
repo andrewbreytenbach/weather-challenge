@@ -1,3 +1,4 @@
+/*  */
 .forecast-item {
         display: flex;
         flex-direction: column;
@@ -8,6 +9,7 @@
         border-radius: 5px;
       }
 
+/*  */
 header {
   background-image: linear-gradient(to right, rgb(80, 9, 234) , rgb(4, 102, 239));
   height: 100px;
@@ -17,6 +19,7 @@ header {
   text-align: center;
 }
 
+/*  */
 .searchbar {
   padding-right: 25px;
   margin-right: 25px;
