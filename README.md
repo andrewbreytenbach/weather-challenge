@@ -78,3 +78,4 @@ Project Link: [https://github.com/andrewbreytenbach/weather-challenge](https://a
 * [https://dev.to/shantanu_jana/how-to-make-a-weather-app-using-javascript-4lke] (How to Make a Weather App using JavaScript)
 * [https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function] (async function)
 * [https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Expressions_and_Operators] (try/wait)
+* [https://openweathermap.org/api] (Weather API)
