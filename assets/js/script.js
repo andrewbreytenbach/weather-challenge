@@ -57,7 +57,7 @@ async function renderCurrentWeather() {
         // Update UI
         currentWeather.innerHTML = `
             <h2>${data.name}, ${data.sys.country}</h2>
-            <p>${new Date().toLocaleDateString()}</p>
+            <h3>${new Date().toLocaleDateString()}</h3>
             <img src="https://openweathermap.org/img/w/${data.weather[0].icon}.png" alt="${data.weather[0].description}">
             <div>
                 <p class="temp">${Math.round(data.main.temp)}°F</p>
