@@ -31,7 +31,21 @@ function getWeatherForecast() {
                 const forecastDiv = document.getElementById('forecast');
                 // This clears any existing content in the html
                 forecastDiv.innerHTML = ''; 
-                
+                // This creates a variable from the search history id in the html
+                const searchHistory = document.getElementById('search-history');
+                // This creates a div in the html that the city name will be stored in
+                const cityDiv = document.createElement('div');
+                // This displays the name of the city to the text content in the html
+                cityDiv.textContent = city;
+                // This adds a list item to the city div
+                cityDiv.classList.add('search-history-item');
+                // This adds an event listener so a function is run to get the weather for the city when the city is clicked
+                cityDiv.addEventListener('click', () => {
+                    getWeatherForCity(city);
+                });
+                // This appends the city that was searched for to the search history list items in the html.
+                searchHistory.appendChild(cityDiv);
+
                 // This uses a for loop to go through all of the times in the aforementioned array
                 for (let i = 0; i < data.list.length; i++) {
                      // Get forecast data for the next 5 days at 12:00 PM
@@ -88,5 +102,11 @@ function getWeatherForecast() {
                 })
                 // This logs error to the console log if any of the previous fetch functions do not work.
                 .catch(error => console.log(error));
+
+                // This function retrieves the weather for a city in the search history when the city is clicked
+                function getWeatherForCity(city) {
+                    document.getElementById('city').value = city;
+                    getWeatherForecast();
+                  }
 
                 }
