@@ -49,33 +49,26 @@ header {
   }
   
   .list-group-horizontal {
-  display: flex;
-  flex-wrap: nowrap;
-  overflow-x: auto;
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
   }
   
   .list-group-item {
-  margin-right: 10px;
+    margin-right: 10px;
   }
   
   @media (max-width: 768px) {
-  .forecast-item {
-  margin: 10px 0;
+    .list-group-horizontal {
+      overflow-x: scroll;
+      scroll-snap-type: x mandatory;
+    }
+    
+    .list-group-item {
+      flex: 0 0 auto;
+      width: calc(100% / 3);
+      margin-right: 0;
+      scroll-snap-align: center;
+    }
   }
   
-  .list-group-horizontal {
-  overflow-x: scroll;
-  scroll-snap-type: x mandatory;
-  }
-  
-  .list-group-item {
-  flex: 0 0 auto;
-  width: calc(100% / 3);
-  margin-right: 0;
-  scroll-snap-align: center;
-  }
-  }
-
-  #forecast .list-group-item {
-    display: block;
-  }
