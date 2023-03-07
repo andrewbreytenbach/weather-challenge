@@ -1,226 +1,154 @@
-const apikey = '84b1f784083597760ab80c6e7e75720c';
+const API_KEY = '84b1f784083597760ab80c6e7e75720c';
+const BASE_URL = 'https://api.openweathermap.org/data/2.5';
 
-function getWeatherForecast() {
-  // This sets the city variable equivalent to whatever city was searched for.
-  const city = document.getElementById('city-input').value;
-  // This is the weather api for the 5 day forecast
-  const geoUrl = `https://api.openweathermap.org/geo/1.0/direct?q=${city}&limit=1&appid=${apikey}`;
+// Select DOM elements
+const searchForm = document.querySelector('#search-form');
+const cityInput = document.querySelector('#city-input');
+const searchHistory = document.querySelector('#search-history');
+const currentWeather = document.querySelector('#current-weather');
+const forecast = document.querySelector('#forecast');
 
-  // Fetch the latitude and longitude for the city
-  fetch(geoUrl)
-    .then(response => response.json())
-    .then(data => {
-      const lat = data[0].lat;
-      const lon = data[0].lon;
-      const currentUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=imperial&appid=${apikey}`;
-      const forecastUrl = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&units=imperial&appid=${apikey}`;
+// Initialize variables
+let city = '';
+let history = [];
 
-      // Fetch the current weather data
-      fetch(currentUrl)
-        .then(response => response.json())
-        .then(data => {
-          // Create elements for displaying the current weather data
-          const currentWeatherDiv = document.getElementById('current-weather');
-          currentWeatherDiv.innerHTML = '';
+// Load search history from localStorage
+if (localStorage.getItem('history')) {
+    history = JSON.parse(localStorage.getItem('history'));
+    renderSearchHistory();
+}
 
-          const cityName = data.name;
-          const currentDate = new Date(data.dt * 1000).toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' });
-          const currentTemp = Math.round(data.main.temp);
-          const currentIconUrl = `https://openweathermap.org/img/w/${data.weather[0].icon}.png`;
-          const currentHumidity = data.main.humidity;
-          const currentWindSpeed = data.wind.speed;
+// Listen for form submit event
+searchForm.addEventListener('submit', e => {
+    e.preventDefault();
+    city = cityInput.value.trim();
 
-          const cityDiv = document.createElement('div');
-          const cityHeader = document.createElement('h2');
-          cityHeader.textContent = cityName;
-          cityDiv.appendChild(cityHeader);
+    if (city) {
+        // Save search history to localStorage
+        history.push(city);
+        localStorage.setItem('history', JSON.stringify(history));
 
-          const dateDiv = document.createElement('div');
-          dateDiv.textContent = currentDate;
-          cityDiv.appendChild(dateDiv);
-
-          const currentIconImg = document.createElement('img');
-          currentIconImg.src = currentIconUrl;
-          cityDiv.appendChild(currentIconImg);
-
-          const currentTempDiv = document.createElement('p');
-          currentTempDiv.classList.add('temp');
-          currentTempDiv.textContent = `${currentTemp}°F`;
-          cityDiv.appendChild(currentTempDiv);
-
-          const currentHumidityDiv = document.createElement('p');
-          currentHumidityDiv.textContent = `Humidity: ${currentHumidity}%`;
-          cityDiv.appendChild(currentHumidityDiv);
-
-          const currentWindDiv = document.createElement('p');
-          currentWindDiv.textContent = `Wind: ${currentWindSpeed} mph`;
-          cityDiv.appendChild(currentWindDiv);
-
-          currentWeatherDiv.appendChild(cityDiv);
-        })
-       
-          // Use a basic fetch function to use the current weather api previously declared
-  fetch(currentUrl)
-  // This is basic syntax for a fetch function 
-  .then(response => response.json())
-  .then(data => {
-    const currentWeatherDiv = document.getElementById('current-weather');
-    currentWeatherDiv.innerHTML = '';
-
-    const cityName = data.name;
-    const currentDate = new Date(data.dt * 1000).toLocaleDateString('en-US', {weekday: 'long', month: 'long', day: 'numeric'});
-    const currentTemp = Math.round(data.main.temp);
-    const currentIconUrl = `https://openweathermap.org/img/w/${data.weather[0].icon}.png`;
-    const currentHumidity = data.main.humidity;
-    const currentWindSpeed = data.wind.speed;
-
-    const cityDiv = document.createElement('div');
-    const cityHeader = document.createElement('h2');
-    cityHeader.textContent = cityName;
-    cityDiv.appendChild(cityHeader);
-
-    const dateDiv = document.createElement('div');
-    dateDiv.textContent = currentDate;
-    cityDiv.appendChild(dateDiv);
-
-    const currentIconImg = document.createElement('img');
-    currentIconImg.src = currentIconUrl;
-    cityDiv.appendChild(currentIconImg);
-
-    const currentTempDiv = document.createElement('p');
-    currentTempDiv.classList.add('temp');
-    currentTempDiv.textContent = `${currentTemp}°F`;
-    cityDiv.appendChild(currentTempDiv);
-
-    const currentHumidityDiv = document.createElement('p');
-    currentHumidityDiv.textContent = `Humidity: ${currentHumidity}%`;
-    cityDiv.appendChild(currentHumidityDiv);
-
-    const currentWindDiv = document.createElement('p');
-    currentWindDiv.textContent = `Wind: ${currentWindSpeed} mph`;
-    cityDiv.appendChild(currentWindDiv);
-
-    currentWeatherDiv.appendChild(cityDiv);
-  })
-  .catch(error => console.log(error));
-
-// Use a for loop to display the 5-day forecast
-for (let i = 0; i < data.list.length; i++) {
-  const forecast = data.list.filter(item => item.dt_txt.includes('12:00:00'))[i];
-  const date = forecast ? new Date(forecast.dt * 1000) : null;
-  const temp = forecast.main ? Math.round(forecast.main.temp) : '';
-  const humidity = forecast.main.humidity;
-  const windSpeed = forecast.wind.speed;
-  const iconUrl = `https://openweathermap.org/img/w/${forecast.weather[0].icon}.png`;
-
-  // Create a div element for each forecast item
-  const forecastItemDiv = document.createElement('div');
-  forecastItemDiv.classList.add('list-group', 'text-center');
-
-  // Add the date to the forecast item
-  const dateDiv = document.createElement('div');
-  const forecastDate = date.toLocaleDateString('en-US', {weekday: 'short'});
-  dateDiv.textContent = forecastDate;
-  forecastItemDiv.appendChild(dateDiv);
-
-  // Add the weather icon to the forecast item
-  const iconImg = document.createElement('img');
-  iconImg.src = iconUrl;
-  forecastItemDiv.appendChild(iconImg);
-
-  // Add the temperature to the forecast item
-  const tempDiv = document.createElement('div');
-  tempDiv.textContent = `${temp}°F`;
-  forecastItemDiv.appendChild(tempDiv);
-
-  // Add the wind speed to the forecast item
-  const windDiv = document.createElement('div');
-  windDiv.textContent = `Wind: ${windSpeed} mph`;
-  forecastItemDiv.appendChild(windDiv);
-
-  // Add the humidity to the forecast item
-  const humidityDiv = document.createElement('div');
-  humidityDiv.textContent = 'Humidity: ${humidity}%';
-  forecastItemDiv.appendChild(humidityDiv);
-
-        // Add the forecast item to the forecast div
-        forecastDiv.appendChild(forecastItemDiv);
+        // Update UI
+        renderCurrentWeather();
+        renderForecast();
+        renderSearchHistory();
     }
 
-    // Save the searched city to local storage and add it to the search history
-    addSearchedCityToHistory(city);
-  })
-  // This logs error to the console log if any of the previous fetch functions do not work.
-  .catch(error => console.log(error));
-};
-
-// Get search history from local storage and display it on the page
-function displaySearchHistory() {
-const searchHistory = getSearchHistoryFromLocalStorage();
-if (searchHistory && searchHistory.length > 0) {
-const searchHistoryDiv = document.getElementById('search-history');
-const searchHistoryList = document.createElement('ul');
-searchHistoryList.classList.add('search-history-list');
-for (let i = 0; i < searchHistory.length; i++) {
-const searchItem = document.createElement('li');
-searchItem.textContent = searchHistory[i];
-searchItem.classList.add('search-history-item');
-searchItem.addEventListener('click', () => getWeatherForecast(searchHistory[i].trim()));
-searchHistoryList.appendChild(searchItem);
-}
-searchHistoryDiv.appendChild(searchHistoryList);
-}
-}
-
-displaySearchHistory();
-
-// Save search history to local storage
-function saveSearchHistoryToLocalStorage(searchHistory) {
-localStorage.setItem('searchHistory', JSON.stringify(searchHistory));
-}
-
-// Add searched city to search history
-function addSearchedCityToHistory(city) {
-let searchHistory = getSearchHistoryFromLocalStorage();
-if (!searchHistory) {
-searchHistory = [];
-}
-if (!searchHistory.includes(city)) {
-searchHistory.unshift(city);
-if (searchHistory.length > 10) {
-searchHistory.pop();
-}
-saveSearchHistoryToLocalStorage(searchHistory);
-}
-displaySearchHistory();
-}
-
-// Get search history from local storage
-function getSearchHistoryFromLocalStorage() {
-const searchHistory = localStorage.getItem('searchHistory');
-if (searchHistory) {
-return JSON.parse(searchHistory);
-}
-return null;
-}
-
-// Clear the search history from local storage and from the page
-function clearSearchHistory() {
-localStorage.removeItem('searchHistory');
-const searchHistoryDiv = document.getElementById('search-history');
-searchHistoryDiv.innerHTML = '';
-}
-
-// Set up event listeners
-const form = document.getElementById('search-form');
-const clearButton = document.getElementById('clear-button');
-
-// Call getWeatherForecast function when the form is submitted
-form.addEventListener('submit', (event) => {
-event.preventDefault();
-getWeatherForecast();
+    // Reset form
+    searchForm.reset();
 });
 
-// Call clearSearchHistory function when the clear button is clicked
-clearButton.addEventListener('click', clearSearchHistory);
+// Listen for click event on search history items
+searchHistory.addEventListener('click', e => {
+    if (e.target.classList.contains('search-history-item')) {
+        city = e.target.textContent;
+        renderCurrentWeather();
+        renderForecast();
+        setActiveHistoryItem(e.target);
+    }
+});
 
+// Render current weather for the selected city
+async function renderCurrentWeather() {
+    try {
+        const response = await fetch(`${BASE_URL}/weather?q=${city}&units=imperial&appid=${API_KEY}`);
+        const data = await response.json();
+
+        // Update UI
+        currentWeather.innerHTML = `
+            <h2>${data.name}, ${data.sys.country}</h2>
+            <p>${new Date().toLocaleDateString()}</p>
+            <img src="https://openweathermap.org/img/w/${data.weather[0].icon}.png" alt="${data.weather[0].description}">
+            <div>
+                <p class="temp">${Math.round(data.main.temp)}°F</p>
+                <p>Humidity: ${data.main.humidity}%</p>
+                <p>Wind Speed: ${data.wind.speed} mph</p>
+            </div>
+        `;
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+// Render 5-day forecast for the selected city
+async function renderForecast() {
+    try {
+        const response = await fetch(`${BASE_URL}/forecast?q=${city}&units=imperial&appid=${API_KEY}`);
+        const data = await response.json();
+
+        // Get forecast data for the next 5 days at 12:00 PM
+        const forecastData = data.list.filter(item => item.dt_txt.includes('12:00:00'));
+
+        // Update UI
+        forecast.innerHTML = '';
+        forecastData.forEach(item => {
+            forecast.innerHTML += `
+                <div class="forecast-card">
+                    <h3>${new Date(item.dt_txt).toLocaleDateString()}</h3>
+                    <img src="https://openweathermap.org/img/w/${item.weather[0].icon}.png" alt="${item.weather[0].description}">
+                    <p class="temp">${Math.round(item.main.temp)}°F</p>
+                    <p>Wind Speed: ${item.wind.speed} mph</p>
+                    <p>Humidity: ${item.main.humidity}%</p>
+                </div>
+            `;
+        });
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+// Render search history
+function renderSearchHistory() {
+    searchHistory.innerHTML = '';
+    history.slice(-5).forEach(item => {
+        searchHistory.innerHTML += `<li class="search-history-item">${item}</li>`;
+    });
+    setActiveHistoryItem(searchHistory.firstChild);
+}
+
+
+// Set active class on search history item
+function setActiveHistoryItem(item) {
+    const activeItem = document.querySelector('.search-history-item.active');
+    if (activeItem) {
+        activeItem.classList.remove('active');
+    }
+
+    item.classList.add('active');
+}
+
+// Listen for click event on search history items
+searchHistory.addEventListener('click', e => {
+    if (e.target.classList.contains('search-history-item')) {
+        city = e.target.textContent;
+        renderCurrentWeather();
+        renderForecast();
+        setActiveHistoryItem(e.target);
+    }
+});
+
+// Update UI and save search history on form submit
+searchForm.addEventListener('submit', e => {
+    e.preventDefault();
+    city = cityInput.value.trim();
+
+    if (city) {
+        // Save search history to localStorage
+        history.push(city);
+        localStorage.setItem('history', JSON.stringify(history));
+
+        // Update UI
+        renderCurrentWeather();
+        renderForecast();
+        renderSearchHistory();
+    }
+
+    // Reset form
+    searchForm.reset();
+});
+
+// Load search history from localStorage
+if (localStorage.getItem('history')) {
+    history = JSON.parse(localStorage.getItem('history'));
+    renderSearchHistory();
+}
