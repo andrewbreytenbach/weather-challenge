@@ -99,11 +99,15 @@ async function renderForecast() {
 
 // Render search history
 function renderSearchHistory() {
-    searchHistory.innerHTML = '';
-    history.slice(-5).forEach(item => {
-        searchHistory.innerHTML += `<li class="search-history-item">${item}</li>`;
-    });
-    setActiveHistoryItem(searchHistory.firstChild);
+  searchHistory.innerHTML = '';
+  history
+      // Get the last 5 unique items in the history array
+      .filter((item, index, self) => self.lastIndexOf(item) === index)
+      .slice(-5)
+      .forEach(item => {
+          searchHistory.innerHTML += `<li class="search-history-item">${item}</li>`;
+      });
+  setActiveHistoryItem(searchHistory.firstChild);
 }
 
 

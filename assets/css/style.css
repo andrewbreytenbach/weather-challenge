@@ -4,8 +4,7 @@ h1 {
   font-weight: bold;
   margin-bottom: 1rem;
   background: linear-gradient(to right, #6c5ce7, #0984e3);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  color: #fff;
   text-align: center;
 }
 
