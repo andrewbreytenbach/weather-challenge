@@ -7,3 +7,17 @@
         border: 1px solid black;
         border-radius: 5px;
       }
+
+header {
+  background-image: linear-gradient(to right, rgb(80, 9, 234) , rgb(4, 102, 239));
+  height: 100px;
+  padding-bottom: 25px;
+  margin-bottom: 25px;
+  color: white;
+  text-align: center;
+}
+
+.searchbar {
+  padding-right: 25px;
+  margin-right: 25px;
+}

@@ -20,11 +20,12 @@
             <h1>Weather Dashboard</h1>
         </header>
         <!-- This is the form with the corresponding inputs needed to get the 5 day weather forecast. -->
-        <form>
+        <form class="searchbar float-end">
             <label for="city">Enter city:</label>
             <input type="text" id="city" name="city">
             <button type="button" onclick="getWeatherForecast()">Get Forecast</button>
         </form>
+        <h3 class="d-flex justify-content-between">Search History</h3>
         <!-- This is the div element on the html that will then display the city's weather forecast. -->
           <div class="col-2 list-group list-group-horizontal" id="forecast"></div>
 
