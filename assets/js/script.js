@@ -16,7 +16,9 @@ function getWeatherForecast() {
             // This uses an API that gets the latitude and longitude of the city put into the search
             const lat = data[0].lat;
             const lon = data[0].lon;
-            const forecastUrl = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${apikey}`;
+            // This url automatically makes the weather units in the imperial system so no later conversion is needed
+            const forecastUrl = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&units=imperial&appid=${apikey}`;
+
             
             // This returns the forecast url of the specified city with its latitude and longitudinal coordinates
             return fetch(forecastUrl);
@@ -32,14 +34,18 @@ function getWeatherForecast() {
                 
                 // This uses a for loop to go through all of the times in the aforementioned array
                 for (let i = 0; i < data.list.length; i++) {
-                    // This uses the data list ability to store new variables for the forecast
-                    const forecast = data.list[i];
+                     // Get forecast data for the next 5 days at 12:00 PM
+                    const forecast = data.list.filter(item => item.dt_txt.includes('12:00:00'))[i];
                     // This sets a date using current time measurements 
                     const date = new Date(forecast.dt * 1000);
-                    // This converts the temperature from Kelvin to Fahrenheit
-                    const temp = Math.round((forecast.main.temp - 273.15) * 9/5 + 32);
+                    // This this gets the temperature using a function that will display it in imperial units
+                    const temp = Math.round(forecast.main.temp);
                     // This sets a new variable that will give a description of the weather forecast in the html
                     const description = forecast.weather[0].description;
+                    // 
+                    const humidity = forecast.main.humidity;
+                    // 
+                    const windSpeed = forecast.wind.speed;
                     // This sets a new variable using a url for various weather icons that will be displayed to the html
                     const iconUrl = `https://openweathermap.org/img/w/${forecast.weather[0].icon}.png`;
                     const forecastItem = document.createElement('div');
@@ -59,6 +65,17 @@ function getWeatherForecast() {
                     const tempDiv = document.createElement('div');
                     tempDiv.textContent = `${temp}°F`;
                     forecastItem.appendChild(tempDiv);
+
+                    // 
+                    const windDiv = document.createElement('div');
+                    windDiv.textContent = `Wind: ${windSpeed} mph`;
+                    forecastItem.appendChild(windDiv);
+  
+                    //
+                    const humidityDiv = document.createElement('div');
+                    humidityDiv.textContent = `Humidity: ${humidity}%`;
+                    forecastItem.appendChild(humidityDiv);
+  
       
                     // This attaches a description of the forecast to the items in the html
                     const descriptionDiv = document.createElement('div');
