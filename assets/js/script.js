@@ -46,27 +46,62 @@ function getWeatherForecast() {
                 // This appends the city that was searched for to the search history list items in the html.
                 searchHistory.appendChild(cityDiv);
 
-                // This uses a for loop to go through all of the times in the aforementioned array
+                // Add the following code to get the current weather data
+                const currentWeatherUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=imperial&appid=${apikey}`;
+
+                return fetch(currentWeatherUrl);
+            })
+
+            // This is (again) basic syntax for a fetch function 
+            .then(response => response.json())
+            .then(data => {
+
+                // This declares a variable that will then be used to display the forecast to the html
+                const forecastDiv = document.getElementById('forecast');
+
+                // Create a div element for the large card
+                const largeCardDiv = document.createElement('div');
+                largeCardDiv.classList.add('large-card');
+
+                // Add an image for the weather icon
+                const iconImg = document.createElement('img');
+                const iconUrl = `https://openweathermap.org/img/w/${data.weather[0].icon}.png`;
+                iconImg.src = iconUrl;
+                iconImg.alt = data.weather[0].description;
+                largeCardDiv.appendChild(iconImg);
+
+                // Add the current temperature to the large card
+                const tempDiv = document.createElement('div');
+                const currentTemp = Math.round(data.main.temp);
+                tempDiv.textContent = `${currentTemp}°F`;
+                largeCardDiv.appendChild(tempDiv);
+
+                // Add the current weather description to the large card
+                const descriptionDiv = document.createElement('div');
+                descriptionDiv.textContent = data.weather[0].description;
+                largeCardDiv.appendChild(descriptionDiv);
+
+                // Add the large card to the forecastDiv
+                forecastDiv.appendChild(largeCardDiv);
+
+                // Use a for loop to display the 5-day forecast
                 for (let i = 0; i < data.list.length; i++) {
-                     // Get forecast data for the next 5 days at 12:00 PM
                     const forecast = data.list.filter(item => item.dt_txt.includes('12:00:00'))[i];
-                    // This sets a date using current time measurements 
                     const date = new Date(forecast.dt * 1000);
-                    // This this gets the temperature using a function that will display it in imperial units
                     const temp = Math.round(forecast.main.temp);
-                    // This sets a new variable that will give a description of the weather forecast in the html
                     const description = forecast.weather[0].description;
-                    // 
                     const humidity = forecast.main.humidity;
-                    // 
                     const windSpeed = forecast.wind.speed;
-                    // This sets a new variable using a url for various weather icons that will be displayed to the html
                     const iconUrl = `https://openweathermap.org/img/w/${forecast.weather[0].icon}.png`;
                     const forecastItem = document.createElement('div');
                     forecastItem.classList.add('forecast-item');
+                    const dateDiv = document.createElement('div');
+                    dateDiv.textContent = date
+
+                    // This sets a new variable using a url for various weather icons that will be displayed to the html
+                    forecastItem.classList.add('forecast-item');
                     
                     // This creates a date that will then be appended to the weather forecast item being displayed on the html
-                    const dateDiv = document.createElement('div');
                     dateDiv.textContent = date.toLocaleDateString();
                     forecastItem.appendChild(dateDiv);
                     
